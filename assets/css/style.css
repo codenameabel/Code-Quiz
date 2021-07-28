@@ -178,6 +178,15 @@ body{
     user-select: none;
 }
 
+.quiz_box header .timer_line{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    height: 3px;
+    width: 50%;
+    background: red;
+}
+
 .quiz_box section{
     padding: 25px 30px 20px 30px;
     background: white;
@@ -238,6 +247,22 @@ section .option_list .option:hover{
     color: #a42834;
     border-color: #a42834;
     background: #f8d7da;
+}
+
+.option_list .option.correct{
+    color: #155724;
+    border-color: #23903c;
+    background: #d4edda;
+}
+
+.option_list .option.incorrect{
+    color: #a42834;
+    border-color: #a42834;
+    background: #f8d7da;
+}
+
+.option_list .option.disabled{
+    pointer-events: none;
 }
 
 .quiz_box footer{

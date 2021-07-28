@@ -5,6 +5,7 @@ const exit_btn = info_box.querySelector(".buttons .quit");
 const continue_btn = info_box.querySelector(".buttons .restart");
 const quiz_box = document.querySelector(".quiz_box");
 const timeCount = quiz_box.querySelector(".timer .timer_sec");
+const timeLine = quiz_box.querySelector("header .time_line");
 
 const option_list = document.querySelector(".option_list");
 
@@ -25,14 +26,19 @@ continue_btn.onclick = () => {
     showQuestions(0);
     queCounter(1);
     startTimer(15);
+    startTimerLine(0);
 }
 
 let que_count = 0;
 let que_numb = 1;
 let counter;
 let timeValue = 15;
+let widthValue = 0;
 
 const next_btn = quiz_box.querySelector(".next_btn")
+const result_box = document.querySelector(".result_box");
+const restart_quiz = result_box.querySelector(".buttons .restart");
+const quit_quiz = result_box.querySelector(".buttons .quit");
 
 // If Next button clicked
 next_btn.onclick = () => {
@@ -43,8 +49,12 @@ next_btn.onclick = () => {
         queCounter(que_numb);
         clearInterval(counter);
         startTimer(timeValue);
+        clearInterval(counterLine);
+        startTimerLine(widthValue);
+        next_btn.style.display = "none";
     } else {
         console.log("Questions completed");
+        showResultBox();
     }
 }
 
@@ -72,6 +82,7 @@ let tickCross = '<div class="icon cross"> <i class="fas fa-times"></i></div>';
 
 function optionSelected(answer) {
     clearInterval(counter);
+    clearInterval(counterLine);
     let userAns = answer.textContent;
     let correctAns = questions[que_count].answer;
     let allOptions = option_list.children.length;
@@ -98,6 +109,7 @@ function optionSelected(answer) {
     for (let i = 0; i < allOptions; i++) {
         option_list.children[i].classList.add("disabled");
     }
+    next_btn.style.display = "block";
 }
 
 function startTimer(time) {
@@ -112,6 +124,23 @@ function startTimer(time) {
         if(time < 0){
             clearInterval(counter);
             timeCount.textContent = "00";
+        }
+    }
+}
+
+function showResultBox(){
+    info_box.classList.remove("activeInfo"); // hide the info box 
+    quiz_box.classList.remove("activeQuiz"); // hide the quiz box
+    result_box.classList.add("activeResult"); // show the result box
+}
+
+function startTimerLine(time) {
+    counterLine = setInterval(timer, 29);
+    function timer() {
+        time += 1;
+        timeLine.style.width = time + "px";
+        if(time > 549){
+            clearInterval(counterLine);
         }
     }
 }
